@@ -11,13 +11,20 @@ import { Navbar } from "./Navbar";
 
 const  TodoContainer = ()=> {
 
+
+    let getFromAPI = ()=>{
+        fetch("https://jsonplaceholder.typicode.com/todos")
+        .then(d=>d.json()).then(data=> { updateTodos(data); localStorage.setItem("todoItem", JSON.stringify(data)) } );
+        return [];
+    }
+
     let initializeTodos = ()=>{
         console.log("test run")
       
         // getting stored items
         const temp = localStorage.getItem("todoItem")
-        const loadedTodos = JSON.parse(temp)
-      
+        const loadedTodos = temp?JSON.parse(temp): getFromAPI();
+        
         return loadedTodos;
       }
 
